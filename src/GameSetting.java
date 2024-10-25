@@ -48,9 +48,13 @@ public class GameSetting {
                     break;
 
                 case 2:
-                    // 게임 기록
-                    for (int i=0; i<record.size(); i++) {
-                        System.out.println((i + 1) + "번째 기록 : " + record.get(i));
+                    // 게임 기록 조회
+                    if (record.isEmpty()) {
+                        System.out.println("기록이 없습니다 게임을 실행해주세요");
+                    } else {
+                        for (int i=0; i<record.size(); i++) {
+                            System.out.println((i + 1) + "번째 기록 : " + record.get(i));
+                        }
                     }
                     break;
 
@@ -58,7 +62,7 @@ public class GameSetting {
                     record.clear();
                     break;
                 default:
-
+                    System.out.println("잘못된 입력값입니다");
             }
         }
     }

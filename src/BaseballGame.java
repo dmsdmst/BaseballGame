@@ -11,7 +11,6 @@ public class BaseballGame {
 
     int inputCount = 0;
     int strikeCount, ballCount;
-    Scanner sc = new Scanner(System.in);
 
     // 중복값 생기지 않도록 3가지 랜덤 숫자 생성
     public BaseballGame(int level) {
@@ -29,6 +28,8 @@ public class BaseballGame {
         while (true) {
             System.out.println("1부터 9까지의 숫자를 "+ level +"개 입력하세요");
             try {
+                Scanner sc = new Scanner(System.in);
+
                 String input = sc.nextLine();
                 validateInput(input, level);
             } catch (Exception e) {
@@ -62,7 +63,7 @@ public class BaseballGame {
         } else if (input.length()!= level) {
             throw new BadInputException(level + "자리 숫자가 아닙니다");
         } else {
-            for (int i = 0; i<level; i++){
+            for (int i = 0; i<level; i++) {
                 guessNumber.add(input.charAt(i));
             }
 
