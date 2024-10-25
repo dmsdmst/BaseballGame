@@ -11,8 +11,8 @@ public class BaseballGame {
     Scanner sc = new Scanner(System.in);
 
     // 중복값 생기지 않도록 3가지 랜덤 숫자 생성
-    public BaseballGame() {
-        while(GoalNumber.size()<3) {
+    public BaseballGame(int level) {
+        while(GoalNumber.size()<level) {
             int randomNum = new Random().nextInt(1, 10);
             if (!GoalNumber.contains(randomNum)) {
                 GoalNumber.add(randomNum);
@@ -20,14 +20,16 @@ public class BaseballGame {
         }
     }
 
-    public int play() {
+    public int play(int level) {
         while (true) {
+            System.out.println("[ 게임을 시작합니다 ]");
+
             // 1. 유저에게 입력값을 받음
-            System.out.println("1부터 9까지의 숫자를 3개 입력하세요");
+            System.out.println("1부터 9까지의 숫자를 "+ level +"개 입력하세요");
             // 2. 올바른 입력값을 받았는지 검증
             try {
                 String input = sc.nextLine();
-                validateInput(input);
+                validateInput(input, level);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 continue;
@@ -37,7 +39,7 @@ public class BaseballGame {
             // 4. 스트라이크 개수 계산
             countStrike();
             // 5. 정답여부 확인, 만약 정답이면 break 를 이용해 반복문 탈출
-            if (strikeCount ==3) {
+            if (strikeCount == level) {
                 break;
             }
             // 6. 볼 개수 계산
@@ -55,23 +57,50 @@ public class BaseballGame {
         return inputCount;
     }
 
-    protected void validateInput(String input) throws BadInputException {
+    protected void validateInput(String input, int level) throws BadInputException {
         if (!Pattern.matches(NUMBER_REG, input)) {
             throw new BadInputException("숫자만 입력해주세요");
-        } else if(input.length()!=3){
-            throw new BadInputException("3자리 숫자가 아닙니다");
+        } else if(input.length()!= level){
+            throw new BadInputException(level + "자리 숫자가 아닙니다");
         }else {
-            int num1, num2, num3, num;
+            int num1, num2, num3, num4, num5, num;
 
             num = Integer.parseInt(input);
-            num1 = num / 100;
-            num2 = ( num - 100 * num1 ) / 10;
-            num3 = num % 10;
 
-            GuessNumber.add(num1);
-            GuessNumber.add(num2);
-            GuessNumber.add(num3);
+            switch(level) {
+                case 3 :
+                    num3 = num / 100;
+                    num2 = ( num - 100 * num3 ) / 10;
+                    num1 = num % 10;
 
+                    GuessNumber.add(num3);
+                    GuessNumber.add(num2);
+                    GuessNumber.add(num1);
+                    break;
+                case 4 :
+                    num4 = num / 1000;
+                    num3 = (num - num4 * 1000) / 100;
+                    num2 = ( num - num4 * 1000 - 100 * num3 ) / 10;
+                    num1 = num % 10;
+                    GuessNumber.add(num4);
+                    GuessNumber.add(num3);
+                    GuessNumber.add(num2);
+                    GuessNumber.add(num1);
+                    break;
+                case 5 :
+                    num5 = num / 10000;
+                    num4 = (num - num5 * 10000) / 1000;
+                    num3 = (num - num5 * 10000 - num4 * 1000) / 100;
+                    num2 = ( num - num4 * 1000 - 100 * num3 ) / 10;
+                    num1 = num % 10;
+
+                    GuessNumber.add(num5);
+                    GuessNumber.add(num4);
+                    GuessNumber.add(num3);
+                    GuessNumber.add(num2);
+                    GuessNumber.add(num1);
+                    break;
+            }
             Set<Integer> set = new HashSet<>(GuessNumber);
 
             if (set.size()!=GuessNumber.size()){
