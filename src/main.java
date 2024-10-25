@@ -4,7 +4,7 @@ public class main {
         GameSetting gameset = new GameSetting();
 
 
-        gameset.GamePlay();
+        gameset.playGame();
 
     }
 
