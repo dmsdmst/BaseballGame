@@ -15,9 +15,9 @@ public class BaseballGame {
     // 중복값 생기지 않도록 3가지 랜덤 숫자 생성
     public BaseballGame(int level) {
         while(goalNumber.size()<level) {
-            char randomNum = Character.forDigit(new Random().nextInt(1, 10),10);
-            if (!goalNumber.contains(randomNum)) {
-                goalNumber.add(randomNum);
+            char randomNumber = Character.forDigit(new Random().nextInt(1, 10),10);
+            if (!goalNumber.contains(randomNumber)) {
+                goalNumber.add(randomNumber);
             }
         }
     }
